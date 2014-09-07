@@ -1,5 +1,6 @@
 import socket
-from src.p2pchat.Connection_Info import Connection_Info
+
+from src.Connection_Info import Connection_Info
 
 
 class peer(object):
