@@ -8,6 +8,7 @@ class peer(object):
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname())) #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
+        self.Join_Network()
 
     def Get_List(self):
         return self.peer_list
@@ -21,3 +22,15 @@ class peer(object):
     def Set_Name(self, new_name):
         self.name = new_name
         self.peer_list[self.connection.Get_IP()] = new_name #Make sure we update the name in the peer's own dictionary
+
+    def Send_Message(self, message):
+        pass
+
+    def Listen(self):
+        pass
+
+    def Join_Network(self):
+        pass
+
+    def Leave_Network(self):
+        pass
