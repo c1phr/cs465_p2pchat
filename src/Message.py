@@ -13,3 +13,9 @@ class Message(object):
 
     def Get_Flag(self):
         return self.flag
+
+    def Get_Body(self):
+        return self.body
+
+    def Get_Timestamp(self):
+        return self.time
