@@ -8,7 +8,8 @@ class Message(object):
         self.time = time.time()
 
     def __str__(self):
-        timestamp = time.localtime(self.time)[3] + ":" + time.localtime(self.time)[4]
+        timestamp = time.localtime(self.time)[3] + ":" \
+                + time.localtime(self.time)[4]
         return timestamp + " --- " + self.body
 
     def Get_Flag(self):
