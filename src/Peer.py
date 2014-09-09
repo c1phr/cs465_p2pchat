@@ -16,6 +16,12 @@ class peer(object):
     def Set_List(self, new_list):
         self.peer_list = new_list
 
+    def Add_User(self, name, ip):
+        pass
+
+    def Remove_User(self, ip):
+        pass
+
     def Get_Name(self):
         return self.name
 
