@@ -31,6 +31,7 @@ class peer(object):
         self.name = new_name
         self.peer_list[self.connection.Get_IP()] = new_name \
                 #Make sure we update the name in the peer's own dictionary
+        #Send_Message()
 
     def Send_Message(self, message):
         pass
@@ -42,4 +43,7 @@ class peer(object):
         pass
 
     def Leave_Network(self):
+        pass
+
+    def Send_Chat(self):
         pass
