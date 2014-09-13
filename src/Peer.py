@@ -35,14 +35,27 @@ class peer(object):
 
     def Send_Message(self, message):
         pass
+      
+    def Start_Server(self): #Tory, this one's all you if you want
+        """
+        Handle non-blocking socket netcode
+        """
+        pass
 
     def Listen(self):
         pass
 
     def Join_Network(self):
+        """
+        Assumes that a server has already been started, and should probably error out if not.
+        Sends a message out to the network to make other peers aware of presence.
+        """
         pass
 
     def Leave_Network(self):
+        """
+        Send out a message to the network to inform that this peer is departing.
+        """
         pass
 
     def Send_Chat(self):
