@@ -44,7 +44,7 @@ class peer(object):
         """
         pass
 
-    def Listen_Handler(self, data, ip=None):
+    def Listen_Handler(self, data, ip):
         """
         Unpacks data that was recieved from the network and takes appropriate action
         """
