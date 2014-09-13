@@ -47,6 +47,7 @@ class peer(object):
     def Listen_Handler(self, data, ip):
         """
         Unpacks data that was recieved from the network and takes appropriate action
+        Takes in serialized data and the ip of the sender
         """
         data_dict = json.loads(data) #Deserialize the data back into a Python dictionary
         flag = data_dict["flag"]
