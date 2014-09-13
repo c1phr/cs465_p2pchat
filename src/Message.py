@@ -1,11 +1,11 @@
-import time
+import time, json
 
 
 class Message(object):
     """
     Messages contain the chat data passed between individual Peers. Through
     the use of flags, they can also indicate other information about
-    individual peer state. 
+    individual peer state.
 
     Possible flags for a message:
      (J) Join Request - request to join the network
@@ -17,6 +17,7 @@ class Message(object):
         self.flag = flag
         self.body = body
         self.time = time.time()
+        self.text_rep = ""
 
     def __str__(self):
         timestamp = time.localtime(self.time)[3] + ":" \
@@ -31,3 +32,7 @@ class Message(object):
 
     def Get_Timestamp(self):
         return self.time
+        
+    def To_Json(self):
+        self.text_rep = self.__str__() #Store the text representation before serialization
+        return json.dumps(self, default = lambda o : o.__dict__, sort_keys = True, indent=4)

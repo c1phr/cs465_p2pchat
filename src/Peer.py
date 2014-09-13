@@ -1,4 +1,4 @@
-import socket, select
+import socket, select, json
 
 from src.Connection_Info import Connection_Info
 
@@ -34,6 +34,7 @@ class peer(object):
         #Send_Message() --> Send a message out to the network to inform them of the new name
 
     def Send_Message(self, message):
+        to_send = message.To_Json() #Serialize the data into JSON so it can be sent over the socket
         pass
       
     def Start_Server(self): #Tory, this one's all you if you want
@@ -42,8 +43,24 @@ class peer(object):
         """
         pass
 
-    def Listen(self):
-        pass
+    def Listen_Handler(self, data):
+        """
+        Unpacks data that was recieved from the network and takes appropriate action
+        """
+        data_dict = json.loads(data) #Deserialize the data back into a Python dictionary
+        flag = data_dict["flag"]
+        if flag == "J":
+            #Join flag
+        
+        elif flag == "M":
+            print(data_dict["text_rep"]
+        
+        elif flag == "N":
+            #Name change
+            
+        elif flag == "D":
+            #Disconnect
+            
 
     def Join_Network(self):
         """
