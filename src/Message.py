@@ -9,6 +9,7 @@ class Message(object):
 
     Possible flags for a message:
      (J) Join Request - request to join the network
+     (U) List Update - send out an updated list to the network, used after a user connectsed
      (M) Message - contains a chat message
      (N) Name Change - contains a new display name for the sending peer
      (D) Disconnect - the sending peer is disconnecting from the network

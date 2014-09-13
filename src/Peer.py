@@ -1,6 +1,7 @@
 import socket, select, json
 
 from src.Connection_Info import Connection_Info
+from src.Message import Message
 
 
 class peer(object):
@@ -37,29 +38,36 @@ class peer(object):
         to_send = message.To_Json() #Serialize the data into JSON so it can be sent over the socket
         pass
       
-    def Start_Server(self): #Tory, this one's all you if you want
+    def Start_Server(self): #Tory's
         """
         Handle non-blocking socket netcode
         """
         pass
 
-    def Listen_Handler(self, data):
+    def Listen_Handler(self, data, ip=None):
         """
         Unpacks data that was recieved from the network and takes appropriate action
         """
         data_dict = json.loads(data) #Deserialize the data back into a Python dictionary
         flag = data_dict["flag"]
-        if flag == "J":
-            #Join flag
+        if flag == "J": #Join
+            if ip:
+                #Body should contain the name of the new user
+                self.peer_list[ip] = data_dict["body"]
+                update_message = Message("U", self.peer_list) #Create new message object to wrap the update message
+                self.Send_Message(update_message) #Send an update message out, this will give the new peer the full list
+
+        elif flag == "U": #Update List
+            self.peer_list = data_dict["body"] #We want to assume that the new list coming down the wire is canonical
         
-        elif flag == "M":
-            print(data_dict["text_rep"]
+        elif flag == "M": #Message
+            print(data_dict["text_rep"])
         
-        elif flag == "N":
-            #Name change
+        elif flag == "N": #Name Change
+            self.peer_list[ip] = data_dict["body"]
             
-        elif flag == "D":
-            #Disconnect
+        elif flag == "D": #Disconnect
+            del data_dict[ip]
             
 
     def Join_Network(self):
