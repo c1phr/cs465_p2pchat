@@ -1,4 +1,4 @@
-import socket
+import socket, select
 
 from src.Connection_Info import Connection_Info
 
@@ -19,10 +19,10 @@ class peer(object):
         self.peer_list = new_list
 
     def Add_User(self, name, ip):
-        pass
+        self.peer_list[ip] = name
 
     def Remove_User(self, ip):
-        pass
+        del self.peer_list[ip]
 
     def Get_Name(self):
         return self.name
@@ -31,7 +31,7 @@ class peer(object):
         self.name = new_name
         self.peer_list[self.connection.Get_IP()] = new_name \
                 #Make sure we update the name in the peer's own dictionary
-        #Send_Message()
+        #Send_Message() --> Send a message out to the network to inform them of the new name
 
     def Send_Message(self, message):
         pass
