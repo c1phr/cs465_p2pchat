@@ -31,11 +31,13 @@ class peer(object):
     def Set_Name(self, new_name):
         self.name = new_name
         self.peer_list[self.connection.Get_IP()] = new_name \
-                #Make sure we update the name in the peer's own dictionary
-        #Send_Message() --> Send a message out to the network to inform them of the new name
+                # Make sure we update the name in the peer's own dictionary
+                # Send_Message() --> Send a message out to the network to 
+                # inform them of the new name
 
     def Send_Message(self, message):
-        to_send = message.To_Json() #Serialize the data into JSON so it can be sent over the socket
+        to_send = message.To_Json() # Serialize the data into JSON so it can
+                                    # be sent over the socket
         pass
       
     def Start_Server(self): #Tory's
@@ -49,17 +51,21 @@ class peer(object):
         Unpacks data that was recieved from the network and takes appropriate action
         Takes in serialized data and the ip of the sender
         """
-        data_dict = json.loads(data) #Deserialize the data back into a Python dictionary
+        data_dict = json.loads(data) #Deserialize the data back into a Python 
+                                     # dictionary
         flag = data_dict["flag"]
         if flag == "J": #Join
             if ip:
                 #Body should contain the name of the new user
                 self.peer_list[ip] = data_dict["body"]
-                update_message = Message("U", self.peer_list) #Create new message object to wrap the update message
-                self.Send_Message(update_message) #Send an update message out, this will give the new peer the full list
+                update_message = Message("U", self.peer_list) #Create new 
+                                # message object to wrap the update message
+                self.Send_Message(update_message) #Send an update message out, 
+                                    #this will give the new peer the full list
 
         elif flag == "U": #Update List
-            self.peer_list = data_dict["body"] #We want to assume that the new list coming down the wire is canonical
+            self.peer_list = data_dict["body"] #We want to assume that the new
+                                        #list coming down the wire is canonical
         
         elif flag == "M": #Message
             print(data_dict["text_rep"])
@@ -73,7 +79,8 @@ class peer(object):
 
     def Join_Network(self):
         """
-        Assumes that a server has already been started, and should probably error out if not.
+        Assumes that a server has already been started, and should probably 
+        error out if not.
         Sends a message out to the network to make other peers aware of presence.
         """
         pass

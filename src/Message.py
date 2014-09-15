@@ -9,7 +9,8 @@ class Message(object):
 
     Possible flags for a message:
      (J) Join Request - request to join the network
-     (U) List Update - send out an updated list to the network, used after a user connectsed
+     (U) List Update - send out an updated list to the network, used after a
+         user connects
      (M) Message - contains a chat message
      (N) Name Change - contains a new display name for the sending peer
      (D) Disconnect - the sending peer is disconnecting from the network
@@ -35,5 +36,7 @@ class Message(object):
         return self.time
         
     def To_Json(self):
-        self.text_rep = self.__str__() #Store the text representation before serialization
-        return json.dumps(self, default = lambda o : o.__dict__, sort_keys = True, indent=4)
+        self.text_rep = self.__str__()  # Store the text representation before
+                                        # serialization
+        return json.dumps(self, 
+                default = lambda o : o.__dict__, sort_keys = True, indent=4)
