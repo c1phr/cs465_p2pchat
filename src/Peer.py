@@ -35,7 +35,10 @@ class peer(object):
                 # Send_Message() --> Send a message out to the network to 
                 # inform them of the new name
 
-    def Send_Message(self, message):
+    def Send_Message(self, target_peer, message):
+        """
+        -target_peer is the peer to whom the message should be sent.
+        """
         to_send = message.To_Json() # Serialize the data into JSON so it can
                                     # be sent over the socket
         pass
@@ -79,17 +82,37 @@ class peer(object):
 
     def Join_Network(self):
         """
-        Assumes that a server has already been started, and should probably 
+        -Since we're assuming that the IP of an active peer is already known,
+        we'll need the IP of that peer to join the network.
+        -Assumes that a server has already been started, and should probably 
         error out if not.
-        Sends a message out to the network to make other peers aware of presence.
+        -Sends a message out to the network to make other peers aware of
+        presence.
         """
+
         pass
 
     def Leave_Network(self):
         """
-        Send out a message to the network to inform that this peer is departing.
+        Send out a message to the network to inform that this peer is
+        departing.
         """
+        # TODO: We need to decide how this ought to be handled. Had a
+        # discussion with Salvatore about whether we should (A) send the
+        # leave request to just one peer--whose responsibility it then
+        # becomes to inform the rest of the network--or (B) send the leave
+        # request to all peers, which puts a lot of pressure on a node that
+        # may just want to get out of the network ASAP. However, considering
+        # that we're only planning for graceful departure, it's not totally
+        # unreasonable to put that burden on the departing party. -AS
         pass
 
-    def Send_Chat(self):
-        pass
+    def Send_Chat(self, message_body):
+        """
+        -message should be a string when it's passed in.
+        -Send a message to each peer, in turn.
+        """
+        to_send = Message('M', message_body)
+        for current_peer in self.Get_List():
+            Send_Message(to_send, current_peer)
+        # Actually, I think that's it for this one. -AS
