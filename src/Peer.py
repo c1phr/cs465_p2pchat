@@ -46,18 +46,18 @@ class peer(object):
         to_send = message.To_Json() # Serialize the data into JSON so it can
                                         # be sent over the socket
 
-        connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
-        socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
+
         for target_peer in self.Get_List():
-            socket_con.connect(target_peer, connection.Get_Send_Port()) #connect to particular ip
-            socket_con.send(to_send)    #send the JSON encoded message
-            socket_con.close()          #close the socket
+            self.socket_con.connect(target_peer, self.connection.Get_Send_Port()) #connect to particular ip
+            self.socket_con.send(to_send)    #send the JSON encoded message
+            self.socket_con.close()          #close the socket
       
     def Start_Server(self): #Tory's
         """
         Handle non-blocking socket netcode
         """
-        pass
+        self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
+        self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
 
     def Listen_Handler(self, data, ip):
         """
