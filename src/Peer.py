@@ -113,7 +113,7 @@ class Peer(object):
             del data_dict[ip]
             
 
-    def Join_Network(self):
+    def Join_Network(self, target):
         """
         -Since we're assuming that the IP of an active peer is already known,
         we'll need the IP of that peer to join the network.
@@ -122,7 +122,10 @@ class Peer(object):
         -Sends a message out to the network to make other peers aware of
         presence.
         """
-
+        self.Add_User( target )
+        join_request = Message( 'J',
+                socket.gethostbyname( socket.gethostbyname() )
+        self.Send_Message( join_request )
         pass
 
     def Leave_Network(self):
@@ -130,14 +133,9 @@ class Peer(object):
         Send out a message to the network to inform that this peer is
         departing.
         """
-        # TODO: We need to decide how this ought to be handled. Had a
-        # discussion with Salvatore about whether we should (A) send the
-        # leave request to just one peer--whose responsibility it then
-        # becomes to inform the rest of the network--or (B) send the leave
-        # request to all peers, which puts a lot of pressure on a node that
-        # may just want to get out of the network ASAP. However, considering
-        # that we're only planning for graceful departure, it's not totally
-        # unreasonable to put that burden on the departing party. -AS
+        disconnect_request = Message( 'D',
+            "Hello sir do you have a moment to talk about leave requests" )
+        self.Send_Message( disconnect_request )
         pass
 
     def Send_Chat(self, message_body):
