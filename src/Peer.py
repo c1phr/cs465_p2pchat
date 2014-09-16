@@ -4,7 +4,7 @@ from Connection_Info import Connection_Info
 from Message import Message
 
 
-class peer(object):
+class Peer(object):
     def __init__(self, name):
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
                 #This should work so long as /etc/hosts isn't overriding
@@ -58,8 +58,29 @@ class peer(object):
         """
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
         self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
+        self.socket_con.bind("", self.connection.listening_port)
         self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
         self.socket_con.setblocking(False) #opens the non blocking channel
+
+    def Listen(self):
+        if self.socket_con:
+            input = [self.socket_con]
+            while True:
+                input_ready, output_ready, errors = select.select(input, [], [])
+
+                for sock in input_ready:
+                    if socket is self.socket_con:
+                        client, address = sock.accept()
+                        print("Accepting socket from " + address[0])
+                        input.append(client)
+                    else:
+                        data = sock.recv(self.connection.buffer)
+                        if data:
+                            print(data)
+                        else:
+                            sock.close()
+                            input.remove(sock)
+                            print("Dropped " + address[0])
 
     def Listen_Handler(self, data, ip):
         """
