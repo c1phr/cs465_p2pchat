@@ -15,6 +15,7 @@ class Message(object):
      (N) Name Change - contains a new display name for the sending peer
      (D) Disconnect - the sending peer is disconnecting from the network
     """
+
     def __init__(self, flag, body):
         self.flag = flag
         self.body = body
@@ -23,7 +24,7 @@ class Message(object):
 
     def __str__(self):
         timestamp = time.localtime(self.time)[3] + ":" \
-                + time.localtime(self.time)[4]
+                    + time.localtime(self.time)[4]
         return timestamp + " --- " + self.body
 
     def Get_Flag(self):
@@ -34,9 +35,9 @@ class Message(object):
 
     def Get_Timestamp(self):
         return self.time
-        
+
     def To_Json(self):
         self.text_rep = self.__str__()  # Store the text representation before
-                                        # serialization
-        return json.dumps(self, 
-                default = lambda o : o.__dict__, sort_keys = True, indent=4)
+        # serialization
+        return json.dumps(self,
+                          default=lambda o: o.__dict__, sort_keys=True, indent=4)
