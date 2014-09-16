@@ -1,6 +1,6 @@
 import Peer
 
-me = Peer.peer("Ryan")
+me = Peer.Peer("Ryan")
 
 me.Start_Server()
 me.Listen()

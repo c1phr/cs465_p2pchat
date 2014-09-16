@@ -10,7 +10,7 @@ class Peer(object):
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
-        self.Join_Network()
+        #self.Join_Network()
 
     def Get_List(self):
         return self.peer_list
@@ -58,9 +58,14 @@ class Peer(object):
         """
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
         self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
-        self.socket_con.bind("", self.connection.listening_port)
+        self.socket_con.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket_con.bind(("", self.connection.listening_port))
         self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
         self.socket_con.setblocking(False) #opens the non blocking channel
+        input = [self.socket_con]
+        print(self.connection.ip_address)
+
+
 
     def Listen(self):
         if self.socket_con:
@@ -69,7 +74,7 @@ class Peer(object):
                 input_ready, output_ready, errors = select.select(input, [], [])
 
                 for sock in input_ready:
-                    if socket is self.socket_con:
+                    if sock is self.socket_con:
                         client, address = sock.accept()
                         print("Accepting socket from " + address[0])
                         input.append(client)
@@ -124,7 +129,7 @@ class Peer(object):
         """
         self.Add_User( target )
         join_request = Message( 'J',
-                socket.gethostbyname( socket.gethostbyname() )
+                socket.gethostbyname( socket.gethostbyname() ))
         self.Send_Message( join_request )
         pass
 
