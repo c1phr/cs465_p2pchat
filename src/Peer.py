@@ -92,7 +92,7 @@ class peer(object):
             del data_dict[ip]
             
 
-    def Join_Network(self):
+    def Join_Network(self, target):
         """
         -Since we're assuming that the IP of an active peer is already known,
         we'll need the IP of that peer to join the network.
@@ -101,7 +101,9 @@ class peer(object):
         -Sends a message out to the network to make other peers aware of
         presence.
         """
-
+        self.Add_User( target )
+        join_request = Message( 'J', format("{target}", target) )
+        self.Send_Message( join_request )
         pass
 
     def Leave_Network(self):
