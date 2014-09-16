@@ -50,8 +50,8 @@ class peer(object):
         socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
         for target_peer in self.Get_List():
             socket_con.connect(target_peer, connection.Get_Send_Port()) #connect to particular ip
-        socket_con.send(to_send)    #send the JSON encoded message
-        socket_con.close()          #close the socket
+            socket_con.send(to_send)    #send the JSON encoded message
+            socket_con.close()          #close the socket
       
     def Start_Server(self): #Tory's
         """
