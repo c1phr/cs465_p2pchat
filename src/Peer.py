@@ -58,6 +58,8 @@ class peer(object):
         """
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
         self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
+        self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
+        self.socket_con.setblocking(False) #opens the non blocking channel
 
     def Listen_Handler(self, data, ip):
         """
