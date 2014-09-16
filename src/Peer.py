@@ -1,13 +1,12 @@
 import socket, select, json
 
-from src.Connection_Info import Connection_Info
-from src.Message import Message
+from Connection_Info import Connection_Info
+from Message import Message
 
 
 class peer(object):
     def __init__(self, name):
-        self.connection = \
-                Connection_Info(socket.gethostbyname(socket.gethostname()))
+        self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
@@ -30,7 +29,7 @@ class peer(object):
 
     def Set_Name(self, new_name):
         self.name = new_name
-        self.peer_list[self.connection.Get_IP()] = new_name \
+        self.peer_list[self.connection.Get_IP()] = new_name
                 # Make sure we update the name in the peer's own dictionary
                 # Send_Message() --> Send a message out to the network to 
                 # inform them of the new name
@@ -46,21 +45,12 @@ class peer(object):
         to_send = message.To_Json() # Serialize the data into JSON so it can
                                         # be sent over the socket
 
-<<<<<<< HEAD
-        for target_peer in self.Get_List():
-            self.socket_con.connect(target_peer, self.connection.Get_Send_Port()) #connect to particular ip
-            self.socket_con.send(to_send)    #send the JSON encoded message
-            self.socket_con.close()          #close the socket
-=======
-
         for target_ip, target_name in self.Get_List():
             if target_ip != self.connection.Get_IP():
                 self.socket_con.connect(target_ip, self.connection.Get_Send_Port()) #connect to particular ip
                 self.socket_con.send(to_send)    #send the JSON encoded message
                 self.socket_con.close()          #close the socket
 
-
->>>>>>> d4927ef7e913912fab15096d4d1a18d049dffdfa
       
     def Start_Server(self): #Tory's
         """
