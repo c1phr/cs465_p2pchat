@@ -35,7 +35,7 @@ class peer(object):
                 # Send_Message() --> Send a message out to the network to 
                 # inform them of the new name
 
-    def Send_Message(self, target_peer, message):
+    def Send_Message(self, message):
         """
         -target_peer is the peer to whom the message should be sent.
         """
@@ -48,7 +48,8 @@ class peer(object):
 
         connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
         socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
-        socket_con.connect(target_peer[i], connection.Get_Send_Port() #connect to particular ip
+        for target_peer in self.Get_List():
+            socket_con.connect(target_peer, connection.Get_Send_Port()) #connect to particular ip
         socket_con.send(to_send)    #send the JSON encoded message
         socket_con.close()          #close the socket
       
@@ -122,6 +123,4 @@ class peer(object):
         -Send a message to each peer, in turn.
         """
         to_send = Message('M', message_body)
-        for current_peer in self.Get_List():
-            Send_Message(to_send, current_peer)
-        # Actually, I think that's it for this one. -AS
+        self.Send_Message(to_send)
