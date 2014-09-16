@@ -41,11 +41,17 @@ class peer(object):
         """
         #So i did this connection but i might have to meet up with you guys, particularly
         #Andrew to see how we want to handle the peer ips through this message. I saw that
-        #Andrew already made a for loop swithin send chat so hopefully these inputs work!
+        #Andrew already made a for loop within send chat so hopefully these inputs work!
 
         to_send = message.To_Json() # Serialize the data into JSON so it can
                                         # be sent over the socket
 
+<<<<<<< HEAD
+        for target_peer in self.Get_List():
+            self.socket_con.connect(target_peer, self.connection.Get_Send_Port()) #connect to particular ip
+            self.socket_con.send(to_send)    #send the JSON encoded message
+            self.socket_con.close()          #close the socket
+=======
 
         for target_ip, target_name in self.Get_List():
             if target_ip != self.connection.Get_IP():
@@ -54,6 +60,7 @@ class peer(object):
                 self.socket_con.close()          #close the socket
 
 
+>>>>>>> d4927ef7e913912fab15096d4d1a18d049dffdfa
       
     def Start_Server(self): #Tory's
         """
