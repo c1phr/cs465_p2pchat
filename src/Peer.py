@@ -47,10 +47,13 @@ class peer(object):
                                         # be sent over the socket
 
 
-        for target_peer in self.Get_List():
-            self.socket_con.connect(target_peer, self.connection.Get_Send_Port()) #connect to particular ip
-            self.socket_con.send(to_send)    #send the JSON encoded message
-            self.socket_con.close()          #close the socket
+        for target_ip, target_name in self.Get_List():
+            if target_ip != self.connection.Get_IP():
+                self.socket_con.connect(target_ip, self.connection.Get_Send_Port()) #connect to particular ip
+                self.socket_con.send(to_send)    #send the JSON encoded message
+                self.socket_con.close()          #close the socket
+
+
       
     def Start_Server(self): #Tory's
         """
