@@ -1,13 +1,12 @@
 import socket, select, json
 
-from src.Connection_Info import Connection_Info
-from src.Message import Message
+from Connection_Info import Connection_Info
+from Message import Message
 
 
 class peer(object):
     def __init__(self, name):
-        self.connection = \
-                Connection_Info(socket.gethostbyname(socket.gethostname()))
+        self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
@@ -30,7 +29,7 @@ class peer(object):
 
     def Set_Name(self, new_name):
         self.name = new_name
-        self.peer_list[self.connection.Get_IP()] = new_name \
+        self.peer_list[self.connection.Get_IP()] = new_name
                 # Make sure we update the name in the peer's own dictionary
                 # Send_Message() --> Send a message out to the network to 
                 # inform them of the new name
