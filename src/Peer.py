@@ -102,7 +102,8 @@ class peer(object):
         presence.
         """
         self.Add_User( target )
-        join_request = Message( 'J', format("{target}", target) )
+        join_request = Message( 'J',
+                socket.gethostbyname( socket.gethostbyname() )
         self.Send_Message( join_request )
         pass
 
