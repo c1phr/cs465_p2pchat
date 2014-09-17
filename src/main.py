@@ -1,8 +1,8 @@
 import socket, select, json
 
-from src.Connection_Info import Connection_Info
-from src.Message import Message
-from src.Peer import Peer
+from Connection_Info import Connection_Info
+from Message import Message
+from Peer import Peer
 
 def main():
     connected = False
