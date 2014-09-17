@@ -78,9 +78,10 @@ class Peer(object):
                         print("Accepting socket from " + address[0])
                         input.append(client)
                     else:
-                        data = sock.recv(self.connection.buffer)
+                        data = sock.recv(self.connection.buffer).decode()
                         if data:
-                            print(data)
+                            #print(data)
+                            self.Listen_Handler(data, address[0])
                         else:
                             sock.close()
                             input.remove(sock)

@@ -23,8 +23,8 @@ class Message(object):
         self.text_rep = ""
 
     def __str__(self):
-        timestamp = time.localtime(self.time)[3] + ":" \
-                    + time.localtime(self.time)[4]
+        timestamp = str(time.localtime(self.time)[3]) + ":" \
+                    + str(time.localtime(self.time)[4])
         return timestamp + " --- " + self.body
 
     def Get_Flag(self):
