@@ -10,6 +10,7 @@ class Peer(object):
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
+        self.Start_Server()
         #self.Join_Network()
 
     def Get_List(self):
