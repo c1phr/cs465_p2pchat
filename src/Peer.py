@@ -130,7 +130,7 @@ class Peer(object):
         presence.
         """
         self.Add_User( self.name, target )
-        my_ip = urlopen( 'http://whatismyip.org' ).read()
+        my_ip = self.connection.Get_IP()
         join_request = Message( 'J', my_ip )
         self.Send_Message( join_request )
 
