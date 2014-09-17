@@ -11,6 +11,7 @@ class Peer(object):
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
         self.peer_list = {self.connection.Get_IP(): self.name}
+        self.Start_Server()
         #self.Join_Network()
 
     def Get_List(self):
@@ -129,7 +130,7 @@ class Peer(object):
         presence.
         """
         self.Add_User( self.name, target )
-        my_ip = urlopen('http://whatismyip.org/').read()
+        my_ip = urlopen( 'http://whatismyip.org' ).read()
         join_request = Message( 'J', my_ip )
         self.Send_Message( join_request )
 
