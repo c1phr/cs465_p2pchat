@@ -24,6 +24,7 @@ def main():
     name_in = input()
     start_info = Peer(name_in)
     print("Welcome " + str(name_in) + "!")
+    print(start_info.connection.Get_IP())
 
 
 
@@ -44,6 +45,7 @@ def main():
         elif user_msg == "/join":
             print("Enter a known IP:")
             known_ip = input()
+            start_info.Join_Network(known_ip)
             join_mes = Message("J", "Joined chat successfully")
             connected = True
 
