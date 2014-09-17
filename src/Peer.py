@@ -42,7 +42,7 @@ class Peer(object):
         #Andrew to see how we want to handle the peer ips through this message. I saw that
         #Andrew already made a for loop within send chat so hopefully these inputs work!
 
-        to_send = message.To_Json() # Serialize the data into JSON so it can
+        to_send = message.To_Json().encode() # Serialize the data into JSON so it can
                                         # be sent over the socket
 
         for target_ip, target_name in self.Get_List():
