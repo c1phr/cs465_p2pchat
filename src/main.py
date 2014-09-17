@@ -23,6 +23,7 @@ def main():
     print("Name: ")
     name_in = input()
     start_info = Peer(name_in)
+    start_info.Start_Server()
     print("Welcome " + str(name_in) + "!")
     print(start_info.connection.Get_IP())
 
