@@ -13,10 +13,11 @@ def main():
           "Flags:\n"
           "/name               change your username\n"
           "/info               displays your user information\n"
-          "/leave              disconnect and leave the chat"
+          "/leave              disconnect and leave the chat\n"
+          "/join               enter IP of known user\n"
           )
 
-    #Setting inital username for chat
+    #Setting initial username for chat
     print("What would you like your name to be?")
     print("Name: ")
     name_in = input()
@@ -26,10 +27,11 @@ def main():
 
     #handling all user message inputs + flags
     user_msg = input()
-    while user_msg != "/leave":
+    while user_msg:
 
+        #ERROR HERE - EXITS AFTER NAME CHANGE
         #Name change
-        if user_msg is "/name":
+        if user_msg == "/name":
             print("Enter new name:")
             new_name = input()
             old_name = name_in
@@ -37,13 +39,20 @@ def main():
             n_msg = Message("N", old_name + " changed names to " + name_in)
 
         #Joining another IP
-        elif user_msg is "/join":
+        elif user_msg == "/join":
             print("Enter a known IP:")
             known_ip = input()
             join_mes = Message("J", "Joined chat successfully")
             connected = True
 
-        #ERROR HERE
+        #leaving the chat
+        elif user_msg == "/leave":
+            disconnect_msg = Message("D", name_in + "has left the chat")
+            print("Leaving chat and exiting program...")
+            connected = False
+            return
+
+        #ERROR HERE - EXITS AFTER PRINT
         #Sending a message when not yet connected to a chat
         elif user_msg and (user_msg != "/join") and (connected is False):
             print("You aren't connected yet")
@@ -54,7 +63,6 @@ def main():
 
         return
 
-    disconnect_msg = Message("D", name_in + "has left the chat")
 
 
 main()
