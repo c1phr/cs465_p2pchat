@@ -6,6 +6,7 @@ from Peer import Peer
 
 def main():
     connected = False
+    running = True
 
     print("Welcome to Python P2P Chat\n\n"
 
@@ -15,7 +16,7 @@ def main():
           "/info               displays your user information\n"
           "/leave              disconnect and leave the chat\n"
           "/join               enter IP of known user\n"
-          )
+    )
 
     #Setting initial username for chat
     print("What would you like your name to be?")
@@ -25,17 +26,18 @@ def main():
     print("Welcome " + str(name_in) + "!")
 
 
-    #handling all user message inputs + flags
-    user_msg = input()
-    while user_msg:
 
-        #ERROR HERE - EXITS AFTER NAME CHANGE
+    while running:
+        #handling all user message inputs + flags
+        user_msg = input()
+
         #Name change
         if user_msg == "/name":
             print("Enter new name:")
             new_name = input()
             old_name = name_in
             name_in =  new_name
+            print("You've changed your name to: " + name_in)
             n_msg = Message("N", old_name + " changed names to " + name_in)
 
         #Joining another IP
@@ -45,23 +47,22 @@ def main():
             join_mes = Message("J", "Joined chat successfully")
             connected = True
 
-        #leaving the chat
+        #Leaving the chat
         elif user_msg == "/leave":
             disconnect_msg = Message("D", name_in + "has left the chat")
             print("Leaving chat and exiting program...")
-            connected = False
+            running = False
             return
 
-        #ERROR HERE - EXITS AFTER PRINT
         #Sending a message when not yet connected to a chat
         elif user_msg and (user_msg != "/join") and (connected is False):
             print("You aren't connected yet")
+            user_msg = ""
 
         #Sending a normal message.
         else:
             reg_msg = Message("M", user_msg)
 
-        return
 
 
 
