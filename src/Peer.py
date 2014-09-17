@@ -2,6 +2,7 @@ import socket, select, json
 
 from Connection_Info import Connection_Info
 from Message import Message
+from urllib.request import urlopen
 
 
 class Peer(object):
@@ -128,8 +129,8 @@ class Peer(object):
         presence.
         """
         self.Add_User( self.name, target )
-        join_request = Message( 'J',
-                socket.gethostbyname( socket.gethostbyname() ))
+        my_ip = urlopen( 'http://whatismyip.org' ).read()
+        join_request = Message( 'J', my_ip )
         self.Send_Message( join_request )
 
     def Leave_Network(self):
