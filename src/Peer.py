@@ -2,6 +2,7 @@ import socket, select, json
 
 from Connection_Info import Connection_Info
 from Message import Message
+from urllib.request import urlopen
 
 
 class Peer(object):
@@ -128,8 +129,8 @@ class Peer(object):
         presence.
         """
         self.Add_User( self.name, target )
-        join_request = Message( 'J',
-                socket.gethostbyname( socket.gethostbyname() ))
+        my_ip = urlopen('http://whatismyip.org/').read()
+        join_request = Message( 'J', my_ip )
         self.Send_Message( join_request )
 
     def Leave_Network(self):
@@ -144,7 +145,6 @@ class Peer(object):
     def Send_Chat(self, message_body):
         """
         -message should be a string when it's passed in.
-        -Send a message to each peer, in turn.
         """
         to_send = Message('M', message_body)
         self.Send_Message(to_send)
