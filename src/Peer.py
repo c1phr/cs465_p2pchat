@@ -47,7 +47,7 @@ class Peer(object):
 
         for target_ip, target_name in self.Get_List():
             if target_ip != self.connection.Get_IP():
-                self.socket_con.connect(target_ip, self.connection.Get_Send_Port()) #connect to particular ip
+                self.socket_con.connect((target_ip, self.connection.Get_Listen_Port())) #connect to particular ip
                 self.socket_con.send(to_send)    #send the JSON encoded message
                 self.socket_con.close()          #close the socket
 
@@ -62,7 +62,6 @@ class Peer(object):
         self.socket_con.bind(("", self.connection.listening_port))
         self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
         self.socket_con.setblocking(False) #opens the non blocking channel
-        input = [self.socket_con]
         print(self.connection.ip_address)
 
 
