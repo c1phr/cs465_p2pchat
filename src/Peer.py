@@ -127,7 +127,7 @@ class Peer(object):
         -Sends a message out to the network to make other peers aware of
         presence.
         """
-        self.Add_User( target )
+        self.Add_User( self.name, target )
         join_request = Message( 'J',
                 socket.gethostbyname( socket.gethostbyname() ))
         self.Send_Message( join_request )
