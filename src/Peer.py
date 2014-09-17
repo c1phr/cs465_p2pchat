@@ -131,7 +131,6 @@ class Peer(object):
         join_request = Message( 'J',
                 socket.gethostbyname( socket.gethostbyname() ))
         self.Send_Message( join_request )
-        pass
 
     def Leave_Network(self):
         """
@@ -141,7 +140,6 @@ class Peer(object):
         disconnect_request = Message( 'D',
             "Hello sir do you have a moment to talk about leave requests" )
         self.Send_Message( disconnect_request )
-        pass
 
     def Send_Chat(self, message_body):
         """
