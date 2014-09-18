@@ -59,11 +59,11 @@ class Peer(object):
 
         for target_ip, target_name in self.Get_List().items():
             if target_ip != self.connection.Get_IP():
-                self.socket_con2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  #open socket
+                self.socket_con2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # open socket
                 self.socket_con2.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                self.socket_con2.connect((target_ip, self.connection.Get_Listen_Port()))  #connect to particular ip
-                self.socket_con2.send(to_send)  #send the JSON encoded message
-                self.socket_con2.close()  #close the socket
+                self.socket_con2.connect((target_ip, self.connection.Get_Listen_Port()))  # connect to particular ip
+                self.socket_con2.send(to_send)  # send the JSON encoded message
+                self.socket_con2.close()  # close the socket
 
     def Start_Server(self):  # Tory's
         """
@@ -113,10 +113,10 @@ class Peer(object):
                     self.connected = True  # Take care of the case where the initial user isn't joined to another peer
                 # Body should contain the name of the new user
                 self.peer_list[ip] = data_dict["body"]
-                update_message = Message("U", self.peer_list)  #Create new
+                update_message = Message("U", self.peer_list)  # Create new
                 # message object to wrap the update message
-                self.Send_Message(update_message)  #Send an update message out,
-                #this will give the new peer the full list
+                self.Send_Message(update_message)  # Send an update message out,
+                # this will give the new peer the full list
                 with self.__lock:
                     print(self.Get_UserName(ip) + " has joined")
 
