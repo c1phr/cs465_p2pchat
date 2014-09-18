@@ -20,6 +20,12 @@ class Peer(object):
     def Set_List(self, new_list):
         self.peer_list = new_list
 
+    def Get_Name(self, ip):
+        if self.peer_list[ip]:
+            return self.peer_list[ip]
+        else:
+            return "User not found"
+
     def Add_User(self, name, ip):
         self.peer_list[ip] = name
 
@@ -81,7 +87,6 @@ class Peer(object):
                 for sock in input_ready:
                     if sock is self.socket_con:
                         client, address = sock.accept()
-                        print("Accepting socket from " + address[0])
                         input.append(client)
                     else:
                         data = sock.recv(self.connection.buffer).decode()
@@ -91,7 +96,6 @@ class Peer(object):
                         else:
                             sock.close()
                             input.remove(sock)
-                            print("Dropped " + address[0])
 
     def Listen_Handler(self, data, ip):
         """
@@ -115,7 +119,7 @@ class Peer(object):
                                         #list coming down the wire is canonical
         
         elif flag == "M": #Message
-            print(data_dict["text_rep"])
+            print(self.Get_Name(ip) + ": " + data_dict["text_rep"])
         
         elif flag == "N": #Name Change
             self.peer_list[ip] = data_dict["body"]
