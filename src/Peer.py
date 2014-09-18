@@ -1,4 +1,4 @@
-import socket, select, json
+import socket, select, json, threading
 
 from Connection_Info import Connection_Info
 from Message import Message
@@ -53,7 +53,6 @@ class Peer(object):
                 self.socket_con.send(to_send)    #send the JSON encoded message
                 self.socket_con.close()          #close the socket
 
-      
     def Start_Server(self): #Tory's
         """
         Handle non-blocking socket netcode
@@ -65,7 +64,9 @@ class Peer(object):
         self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
         self.socket_con.setblocking(False) #opens the non blocking channel
         print(self.connection.ip_address)
-
+        thread = threading.Thread(target=self.Listen)
+        thread.daemon = True
+        thread.start()
 
 
     def Listen(self):
