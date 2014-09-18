@@ -25,7 +25,10 @@ class Message(object):
     def __str__(self):
         timestamp = str(time.localtime(self.time)[3]) + ":" \
                     + str(time.localtime(self.time)[4])
-        return timestamp + " --- " + self.body
+        if isinstance(self.body, str):
+            return timestamp + " --- " + self.body
+        else:
+            return "No body"
 
     def Get_Flag(self):
         return self.flag

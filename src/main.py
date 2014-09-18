@@ -47,23 +47,24 @@ def main():
             known_ip = input()
             start_info.Join_Network(known_ip)
             join_mes = Message("J", "Joined chat successfully")
-            connected = True
+            start_info.Set_Connected(True)
 
         #Leaving the chat
         elif user_msg == "/leave":
-            disconnect_msg = Message("D", name_in + "has left the chat")
+            start_info.Leave_Network()
+            # disconnect_msg = Message("D", name_in + "has left the chat")
             print("Leaving chat and exiting program...")
             running = False
             return
 
         #Sending a message when not yet connected to a chat
-        elif user_msg and (user_msg != "/join") and (connected is False):
+        elif user_msg and (user_msg != "/join") and (start_info.Get_Connected() is False):
             print("You aren't connected yet")
             user_msg = ""
 
         #Sending a normal message.
         else:
-            reg_msg = Message("M", user_msg)
+            start_info.Send_Chat(user_msg)
 
 
 
