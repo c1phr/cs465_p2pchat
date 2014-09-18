@@ -15,8 +15,10 @@ arbitrary limit at 15.
 ##### Assumptions
 Some assumptions are made about the operation of the application. The two
 largest ones are:
+
  1. Participants in the network will always know (before attempting to
 connect) the address of at least one peer already in the network, and
+
  2. Participants in the network will never leave without taking care of the
 proper procedures for doing so, i.e.: any disconnection will be a graceful
 one.
