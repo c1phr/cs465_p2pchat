@@ -24,7 +24,7 @@ def main():
     name_in = input()
     start_info = Peer(name_in)
     print("Welcome " + str(name_in) + "!")
-    print(start_info.connection.Get_IP())
+    print("IP: " + start_info.connection.Get_IP())
 
 
 
@@ -36,10 +36,16 @@ def main():
         if user_msg == "/name":
             print("Enter new name:")
             new_name = input()
-            old_name = name_in
-            name_in =  new_name
-            print("You've changed your name to: " + name_in)
-            n_msg = Message("N", old_name + " changed names to " + name_in)
+            start_info.Set_Name(new_name)
+            print("You've changed your name to: " + new_name)
+
+        #Info about current user
+        elif user_msg == "/info":
+            print("Name: " + start_info.Get_Name())
+            print("IP: " + start_info.connection.Get_IP())
+            print("Connected to: ")
+            for i in start_info.Get_List():
+                print(i)
 
         #Joining another IP
         elif user_msg == "/join":
@@ -64,8 +70,6 @@ def main():
         #Sending a normal message.
         else:
             start_info.Send_Chat(user_msg)
-
-
 
 
 main()
