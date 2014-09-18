@@ -58,7 +58,7 @@ def main():
             return
 
         #Sending a message when not yet connected to a chat
-        elif user_msg and (user_msg != "/join") and (connected is False):
+        elif user_msg and (user_msg != "/join") and (start_info.Get_Connected() is False):
             print("You aren't connected yet")
             user_msg = ""
 
