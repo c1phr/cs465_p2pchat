@@ -63,7 +63,7 @@ def main():
 
         #Sending a normal message.
         else:
-            reg_msg = Message("M", user_msg)
+            start_info.Send_Chat(user_msg)
 
 
 
