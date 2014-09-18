@@ -134,6 +134,8 @@ class Peer(object):
             self.peer_list[ip] = data_dict["body"]
 
         elif flag == "D":  # Disconnect
+            with self.__lock:
+                print(self.Get_UserName(ip) + " is leaving")
             del self.peer_list[ip]
 
 
@@ -170,5 +172,5 @@ class Peer(object):
         """
         to_send = Message('M', message_body)
         with self.__lock:
-            print(to_send)
+            print("You: " + str(to_send))
         self.Send_Message(to_send)
