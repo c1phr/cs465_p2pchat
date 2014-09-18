@@ -49,9 +49,11 @@ class Peer(object):
 
         for target_ip, target_name in self.Get_List().items():
             if target_ip != self.connection.Get_IP():
-                self.socket_con.connect((target_ip, self.connection.Get_Listen_Port())) #connect to particular ip
-                self.socket_con.send(to_send)    #send the JSON encoded message
-                self.socket_con.close()          #close the socket
+                self.socket_con2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
+                self.socket_con2.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                self.socket_con2.connect((target_ip, self.connection.Get_Listen_Port())) #connect to particular ip
+                self.socket_con2.send(to_send)    #send the JSON encoded message
+                self.socket_con2.close()          #close the socket
 
     def Start_Server(self): #Tory's
         """
@@ -60,16 +62,17 @@ class Peer(object):
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
         self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #open socket
         self.socket_con.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket_con.bind(("", self.connection.listening_port))
+        self.socket_con.bind((socket.gethostname(), self.connection.listening_port))
         self.socket_con.listen(15) # up to fifteen users can message at once. Can change later
         self.socket_con.setblocking(False) #opens the non blocking channel
-        print(self.connection.ip_address)
+
         thread = threading.Thread(target=self.Listen)
         thread.daemon = True
         thread.start()
 
 
     def Listen(self):
+        print("Listening")
         if self.socket_con:
             input = [self.socket_con]
             while True:
