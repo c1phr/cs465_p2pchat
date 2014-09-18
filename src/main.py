@@ -51,7 +51,8 @@ def main():
 
         #Leaving the chat
         elif user_msg == "/leave":
-            disconnect_msg = Message("D", name_in + "has left the chat")
+            start_info.Leave_Network()
+            # disconnect_msg = Message("D", name_in + "has left the chat")
             print("Leaving chat and exiting program...")
             running = False
             return
