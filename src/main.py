@@ -39,6 +39,7 @@ def main():
             start_info.Set_Name(new_name)
             name_msg = Message("N", new_name)
             start_info.Send_Message(name_msg)
+            start_info.Send_Chat(name_in + " changed their name to " + new_name)
             print("You've changed your name to: " + new_name)
 
         #Info about current user
