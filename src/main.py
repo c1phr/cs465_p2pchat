@@ -44,8 +44,8 @@ def main():
             print("Name: " + start_info.Get_Name())
             print("IP: " + start_info.connection.Get_IP())
             print("Connected to: ")
-            for i in start_info.Get_List():
-                print(i)
+            for ip in start_info.Get_List():
+                print(start_info.Get_UserName(ip) + " : " + ip)
 
         #Joining another IP
         elif user_msg == "/join":
