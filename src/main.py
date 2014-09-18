@@ -47,7 +47,7 @@ def main():
             known_ip = input()
             start_info.Join_Network(known_ip)
             join_mes = Message("J", "Joined chat successfully")
-            connected = True
+            start_info.Set_Connected(True)
 
         #Leaving the chat
         elif user_msg == "/leave":
