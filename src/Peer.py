@@ -10,9 +10,15 @@ class Peer(object):
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
                 #This should work so long as /etc/hosts isn't overriding
         self.name = name
+        self.connected = False
         self.peer_list = {self.connection.Get_IP(): self.name}
         self.Start_Server()
-        #self.Join_Network()
+
+    def Get_Connected(self):
+        return self.connected
+
+    def Set_Connected(self, connected):
+        self.connected = connected
 
     def Get_List(self):
         return self.peer_list
