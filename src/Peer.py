@@ -12,6 +12,7 @@ class Peer(object):
         self.name = name
         self.connected = False
         self.peer_list = {self.connection.Get_IP(): self.name}
+        self.__lock = threading.Lock()  # Resource lock, should never be touched outside of this class
         self.Start_Server()
 
     def Get_Connected(self):
@@ -52,9 +53,6 @@ class Peer(object):
         """
         -target_peer is the peer to whom the message should be sent.
         """
-        # So i did this connection but i might have to meet up with you guys, particularly
-        #Andrew to see how we want to handle the peer ips through this message. I saw that
-        #Andrew already made a for loop within send chat so hopefully these inputs work!
 
         to_send = message.To_Json().encode()  # Serialize the data into JSON so it can
         # be sent over the socket
@@ -72,11 +70,11 @@ class Peer(object):
         Handle non-blocking socket netcode
         """
         self.connection = Connection_Info(socket.gethostbyname(socket.gethostname()))
-        self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  #open socket
+        self.socket_con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # open socket
         self.socket_con.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket_con.bind((socket.gethostname(), self.connection.listening_port))
         self.socket_con.listen(15)  # up to fifteen users can message at once. Can change later
-        self.socket_con.setblocking(False)  #opens the non blocking channel
+        self.socket_con.setblocking(False)  # opens the non blocking channel
 
         thread = threading.Thread(target=self.Listen)
         thread.daemon = True
@@ -84,7 +82,6 @@ class Peer(object):
 
 
     def Listen(self):
-        print("Listening")
         if self.socket_con:
             input = [self.socket_con]
             while True:
@@ -97,7 +94,6 @@ class Peer(object):
                     else:
                         data = sock.recv(self.connection.buffer).decode()
                         if data:
-                            # print(data)
                             self.Listen_Handler(data, address[0])
                         else:
                             sock.close()
@@ -114,8 +110,8 @@ class Peer(object):
         if flag == "J":  # Join
             if ip:
                 if not self.connected:
-                    self.connected = True  #Take care of the case where the initial user isn't joined to another peer
-                #Body should contain the name of the new user
+                    self.connected = True  # Take care of the case where the initial user isn't joined to another peer
+                # Body should contain the name of the new user
                 self.peer_list[ip] = data_dict["body"]
                 update_message = Message("U", self.peer_list)  #Create new
                 # message object to wrap the update message
@@ -123,17 +119,20 @@ class Peer(object):
                 #this will give the new peer the full list
 
         elif flag == "U":  # Update List
-            self.peer_list = data_dict["body"]  #We want to assume that the new
-            #list coming down the wire is canonical
+            self.peer_list = data_dict["body"]  # We want to assume that the new
+            # list coming down the wire is canonical
+            with self.__lock:
+                print("A new user has joined")
 
         elif flag == "M":  # Message
-            print(self.Get_UserName(ip) + ": " + data_dict["text_rep"])
+            with self.__lock:
+                print(self.Get_UserName(ip) + ": " + data_dict["text_rep"])
 
         elif flag == "N":  # Name Change
             self.peer_list[ip] = data_dict["body"]
 
         elif flag == "D":  # Disconnect
-            del data_dict[ip]
+            del self.peer_list[ip]
 
 
     def Join_Network(self, target):
@@ -157,7 +156,10 @@ class Peer(object):
         """
         disconnect_request = Message('D',
                                      "Hello sir do you have a moment to talk about leave requests")
-        self.Send_Message(disconnect_request)
+        try:
+            self.Send_Message(disconnect_request)
+        except:
+            pass  # Silence people failing on leave, so unexpected disconnects don't blow up stuff
 
     def Send_Chat(self, message_body):
         """
@@ -165,4 +167,6 @@ class Peer(object):
         -Send a message to each peer, in turn.
         """
         to_send = Message('M', message_body)
+        with self.__lock:
+            print(to_send)
         self.Send_Message(to_send)
