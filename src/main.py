@@ -46,7 +46,6 @@ def main():
             print("Enter a known IP:")
             known_ip = input()
             start_info.Join_Network(known_ip)
-            join_mes = Message("J", "Joined chat successfully")
             start_info.Set_Connected(True)
 
         #Leaving the chat
