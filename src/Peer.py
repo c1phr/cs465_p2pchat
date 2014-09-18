@@ -117,6 +117,8 @@ class Peer(object):
                 # message object to wrap the update message
                 self.Send_Message(update_message)  #Send an update message out,
                 #this will give the new peer the full list
+                with self.__lock:
+                    print("A new user has joined")
 
         elif flag == "U":  # Update List
             self.peer_list = data_dict["body"]  # We want to assume that the new
