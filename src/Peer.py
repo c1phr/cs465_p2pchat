@@ -47,7 +47,7 @@ class Peer(object):
         to_send = message.To_Json().encode() # Serialize the data into JSON so it can
                                         # be sent over the socket
 
-        for target_ip, target_name in self.Get_List():
+        for target_ip, target_name in self.Get_List().items():
             if target_ip != self.connection.Get_IP():
                 self.socket_con.connect((target_ip, self.connection.Get_Listen_Port())) #connect to particular ip
                 self.socket_con.send(to_send)    #send the JSON encoded message
