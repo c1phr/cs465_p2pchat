@@ -20,7 +20,7 @@ class Peer(object):
     def Set_List(self, new_list):
         self.peer_list = new_list
 
-    def Get_Name(self, ip):
+    def Get_UserName(self, ip):
         if self.peer_list[ip]:
             return self.peer_list[ip]
         else:
@@ -119,7 +119,7 @@ class Peer(object):
                                         #list coming down the wire is canonical
         
         elif flag == "M": #Message
-            print(self.Get_Name(ip) + ": " + data_dict["text_rep"])
+            print(self.Get_UserName(ip) + ": " + data_dict["text_rep"])
         
         elif flag == "N": #Name Change
             self.peer_list[ip] = data_dict["body"]
