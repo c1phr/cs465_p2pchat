@@ -139,7 +139,7 @@ class Peer(object):
         """
         self.Add_User( self.name, target )
         my_ip = self.connection.Get_IP()
-        join_request = Message( 'J', my_ip )
+        join_request = Message( 'J', self.name )
         self.Send_Message( join_request )
 
     def Leave_Network(self):
